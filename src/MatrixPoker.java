@@ -139,7 +139,13 @@ public class MatrixPoker {
 		}
 	}
 
-	public static void MakeDepositOnCashierPage(WebDriver driver, WebDriverWait wait) throws InterruptedException {
+	public static void MakeDepositOnCashierPage(WebDriver driver, WebDriverWait wait) throws InterruptedException 
+	{
+		Thread.sleep(3000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("menu_Kasir")));
+		driver.findElement(By.id("menu_Kasir")).click();
+		System.out.println("Navigation to Cashier Done");
+		
 		WebElement cashiertab = driver.findElement(By.xpath("//*[contains(@id,'tab_container_')]"));
 		List<WebElement> cashiersubtab = cashiertab.findElements(By.tagName("li"));
 
@@ -167,6 +173,34 @@ public class MatrixPoker {
 		System.out.println(depositmsg);
 	}
 
+	public static void MakeWithdrawOnCashierPage(WebDriver driver, WebDriverWait wait) throws InterruptedException
+	{
+		Thread.sleep(3000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("menu_Kasir")));
+		driver.findElement(By.id("menu_Kasir")).click();
+		System.out.println("Navigation to Cashier Done");
+		
+		WebElement cashiertab = driver.findElement(By.xpath("//*[contains(@id,'tab_container_')]"));
+		List<WebElement> cashiersubtab = cashiertab.findElements(By.tagName("li"));
+
+		for (WebElement li : cashiersubtab) {
+			if (li.getText().equals("Withdraw")) {
+				li.click();
+				System.out.println("----------> Navigavtion to Withdrawal Tab Done");
+			}
+		}
+
+		Thread.sleep(5000);
+		
+		driver.findElement(By.xpath("//*[contains(@id,'withdrawContainer_')]/div[7]/div/input")).sendKeys("1100");
+		driver.findElement(By.id("password")).sendKeys("123123");
+		driver.findElement(By.xpath("//*[contains(@id,'withdrawsubmit')]")).click();
+		
+		String withdrawmsg = driver.findElement(By.xpath("//*[contains(@id,'withdrawContainer_')]/div[1]/div")).getText();
+		System.out.println(withdrawmsg);
+		
+	}
+	
 	public static void ApproveDeposit() throws InterruptedException {
 		
 		WebDriver driver = new ChromeDriver();
@@ -366,25 +400,25 @@ public class MatrixPoker {
 			System.out.println("Browser Opening Done");
 
 			driver.manage().window().maximize();
-			driver.get("http://dev.freepoker99.com/");
+			driver.get("http://stage.freepoker99.com/");
 			System.out.println("Poker website Opening Done");
 
 			String user = readLine;
 
-			//login(driver, wait, user);
-			register(driver,wait);
-			NavigateToCashier(driver, wait);
-			MakeDepositOnCashierPage(driver, wait);
-			ApproveDeposit();
-			NavigateToProfile(driver, wait);
-			NavigateToJackpot(driver, wait);
-			NavigateToReferral(driver, wait);
-			NavigateToMemo(driver, wait);
-			NavigateToLobby(driver, wait);
-			OpenTable(driver, wait);
-			chat(driver,wait);
+			login(driver, wait, user);
+			//register(driver,wait);
+			//NavigateToCashier(driver, wait);
+			//MakeDepositOnCashierPage(driver, wait);
+			MakeWithdrawOnCashierPage(driver, wait);
+			//ApproveDeposit();
+			//NavigateToProfile(driver, wait);
+			//NavigateToJackpot(driver, wait);
+			//NavigateToReferral(driver, wait);
+			//NavigateToMemo(driver, wait);
+			//NavigateToLobby(driver, wait);
+			//OpenTable(driver, wait);
+			//chat(driver,wait);
 		}
 		b.close(); 
-
 	}
 }
