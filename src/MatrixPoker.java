@@ -53,6 +53,7 @@ public class MatrixPoker {
 	public static void register(WebDriver driver, WebDriverWait wait) throws InterruptedException {
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("register_user")));
 		driver.findElement(By.id("register_user")).click();
+		
 		System.out.println("Opening Register Page Done");
 		Thread.sleep(3000);
 
@@ -84,7 +85,7 @@ public class MatrixPoker {
 	public static void login(WebDriver driver, WebDriverWait wait, String user) {
 
 		driver.findElement(By.id("uname")).sendKeys(user);
-		driver.findElement(By.id("upassword")).sendKeys("123123");
+		driver.findElement(By.id("upassword")).sendKeys("test123");
 		driver.findElement(By.id("logsubmit")).click();
 		System.out.println("Login Done For Player : " + user);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("agree")));
@@ -344,6 +345,9 @@ public class MatrixPoker {
 	}
 
 	public static void main(String[] args) throws InterruptedException, IOException {
+		
+		System.out.println("Hello");
+		
 		String exePath = "C:\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", exePath);
 
@@ -366,13 +370,13 @@ public class MatrixPoker {
 			System.out.println("Browser Opening Done");
 
 			driver.manage().window().maximize();
-			driver.get("http://dev.freepoker99.com/");
+			driver.get("http://stage.freepoker99.com/");
 			System.out.println("Poker website Opening Done");
 
 			String user = readLine;
 
-			//login(driver, wait, user);
-			register(driver,wait);
+			login(driver, wait, user);
+			//register(driver,wait);
 			NavigateToCashier(driver, wait);
 			MakeDepositOnCashierPage(driver, wait);
 			ApproveDeposit();
