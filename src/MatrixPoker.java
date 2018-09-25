@@ -174,7 +174,7 @@ public class MatrixPoker {
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		System.out.println("Browser Opening Done");
 		driver.manage().window().maximize();
-		driver.get("http://13.251.67.102");
+		driver.get("http://18.136.60.168");
 		System.out.println("Opening Admin URL Successfully Done");
 		Thread.sleep(3000);
 
@@ -317,7 +317,71 @@ public class MatrixPoker {
 			}
 		}
 	}
+	
+	//This test case will cover the complete functionality for Memo module.
+	
+	public static void Memo(WebDriver driver, WebDriverWait wait) throws InterruptedException {
+		Thread.sleep(3000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("menu_MEMO")));
+		driver.findElement(By.id("menu_MEMO")).click();
+		System.out.println("Successfully clicked on Memo tab.");
+		driver.findElement(By.xpath("/html/body/div/div/section/div/div[1]/ul/li[1]/a")).click();
+		System.out.println("Successfully clicked on Memo Inbox tab.");
+		driver.findElement(By.xpath("//*[@id=\"tabs-1\"]")).click();
+		System.out.println("Selected is Memo Inbox container");
+		//Check the inbox message count.
 
+		WebElement emailList = driver.findElement(By.xpath("/html/body/div/div/section/div/div[2]/div/div/div[1]/div[1]/div[1]/div/label/span"));
+		System.out.println(emailList.getSize());
+		System.out.println("Above is inbox message count.");
+		//To open Memo Inbox tab.
+		
+		driver.findElement(By.xpath("/html/body/div/div/section/div/div[2]/div/div/div[1]/div[1]/div[3]/table/tbody/tr/td[2]")).click();
+		System.out.println("Successfully opened the inbox message.");
+		Thread.sleep(3000);
+		
+		//To open Memo Compose Tab
+		driver.findElement(By.xpath("/html/body/div/div/section/div/div[1]/ul/li[2]/a")).click();
+		System.out.println("Successfully opened Compose tab");
+		
+		//Enter field in Memo Compose form
+		driver.findElement(By.id("to")).sendKeys("Error");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("subject")));
+		driver.findElement(By.id("subject")).sendKeys("Test Subject");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("message")));
+		driver.findElement(By.id("message")).sendKeys("Test message");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("composememo")));
+		driver.findElement(By.id("composememo")).click();
+		Thread.sleep(3000);
+
+		System.out.println("Successfully send memo message.");
+		Thread.sleep(3000);
+		
+		//To open Memo Outbox Tab
+		driver.findElement(By.xpath("/html/body/div/div/section/div/div[1]/ul/li[3]/a")).click();
+		System.out.println("Successfully opened Outbox tab");
+
+		//To open Auto Memo Tab
+		driver.findElement(By.xpath("/html/body/div/div/section/div/div[1]/ul/li[4]/a")).click();
+		System.out.println("Successfully opened Auto Memo tab");
+		
+		driver.findElement(By.xpath("/html/body/div/div/section/div/div[2]/div/div/div[4]/div/div[2]/div[1]/button")).click();
+		System.out.println("Successfully sent auto memo message");
+		
+		driver.findElement(By.xpath("/html/body/div/div/section/div/div[2]/div/div/div[4]/div/div[2]/div[2]/button")).click();
+		System.out.println("Successfully sent auto memo message");
+		
+	}
+	
+	public static void LogOut(WebDriver driver, WebDriverWait wait) throws InterruptedException {
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("logout")));
+		driver.findElement(By.id("logout")).click();
+		System.out.println("Successfully logged out from the browser.");
+		
+		driver.close();
+	}
+	
 	public static void OpenTable(WebDriver driver, WebDriverWait wait) throws InterruptedException {
 		Thread.sleep(3000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("menu_LOBBY")));
@@ -377,16 +441,18 @@ public class MatrixPoker {
 
 			login(driver, wait, user);
 			//register(driver,wait);
-			NavigateToCashier(driver, wait);
-			MakeDepositOnCashierPage(driver, wait);
-			ApproveDeposit();
-			NavigateToProfile(driver, wait);
-			NavigateToJackpot(driver, wait);
-			NavigateToReferral(driver, wait);
-			NavigateToMemo(driver, wait);
-			NavigateToLobby(driver, wait);
-			OpenTable(driver, wait);
-			chat(driver,wait);
+			//NavigateToCashier(driver, wait);
+			//MakeDepositOnCashierPage(driver, wait);
+			//ApproveDeposit();
+			//NavigateToProfile(driver, wait);
+			//NavigateToJackpot(driver, wait);
+			//NavigateToReferral(driver, wait);
+			//NavigateToMemo(driver, wait);
+			Memo(driver, wait);
+			//NavigateToLobby(driver, wait);
+			//OpenTable(driver, wait);
+			//chat(driver,wait);
+			LogOut(driver, wait);
 		}
 		b.close(); 
 
