@@ -34,7 +34,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.google.common.io.Files;
 
 public class MatrixPoker {
-	//Pooja
+	
+	//Hello 
 	static Random ran = new Random();
 	static int ranint = ran.nextInt(1000);
 	static String username = "Auto" + ranint;
@@ -85,7 +86,7 @@ public class MatrixPoker {
 	public static void login(WebDriver driver, WebDriverWait wait, String user) {
 
 		driver.findElement(By.id("uname")).sendKeys(user);
-		driver.findElement(By.id("upassword")).sendKeys("test123");
+		driver.findElement(By.id("upassword")).sendKeys("123123");
 		driver.findElement(By.id("logsubmit")).click();
 		System.out.println("Login Done For Player : " + user);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("agree")));
@@ -158,13 +159,15 @@ public class MatrixPoker {
 		 * LocalDateTime now = LocalDateTime.now(); System.out.println(dtf.format(now));
 		 * driver.findElement(By.id("depositdate")).sendKeys(dtf.format(now));
 		 */
-
-		driver.findElement(By.xpath("//*[contains(@id,'depoistContainer_')]/div[8]/div/input")).sendKeys("12000");
-		driver.findElement(By.xpath("//*[contains(@id,'depoistContainer_')]/div[10]/div/input")).sendKeys("Test");
+		Select SelBank = new Select(driver.findElement(By.id("selectBankAdmin")));
+		SelBank.selectByIndex(1);
+		
+		driver.findElement(By.id("depositamount")).sendKeys("12000");
+		driver.findElement(By.id("note")).sendKeys("Test");
 
 		driver.findElement(By.xpath("//*[contains(text(),'Deposit')][contains(@id,'depositsubmit')]")).click();
 		Thread.sleep(3000);
-		String depositmsg = driver.findElement(By.xpath("//*[contains(@id,'depoistContainer_')]/div[1]/div")).getText();
+		String depositmsg = driver.findElement(By.xpath("//*[contains(@id,'depoistContainer_')]/div[2]/div")).getText();
 		System.out.println(depositmsg);
 	}
 
@@ -383,16 +386,24 @@ public class MatrixPoker {
 	}
 	
 	public static void OpenTable(WebDriver driver, WebDriverWait wait) throws InterruptedException {
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("menu_LOBBY")));
 		driver.findElement(By.id("menu_LOBBY")).click();
 		System.out.println("Navigation to Lobby Done");
 		Thread.sleep(3000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(@id,'utill_playgame_btn_0_')]")));
 		driver.findElement(By.xpath("//*[contains(@id,'utill_playgame_btn_0_')]")).click();
+		//Thread.sleep(3000);
+		//String tablename = driver.findElement(By.id("utill_table_body_td_0_")).getText();
+		//System.out.println(tablename + "  Table Opening Done");
 		Thread.sleep(3000);
-		String tablename = driver.findElement(By.id("utill_table_body_td_0_0")).getText();
-		System.out.println(tablename + "  Table Opening Done");
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("aq_chat")));
+		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		
+		Object val = js.executeScript("return myRoot[\"seat_1\"])");
+		System.out.println(val);
 	}
 
 	public static void chat(WebDriver driver, WebDriverWait wait) {
@@ -448,11 +459,11 @@ public class MatrixPoker {
 			//NavigateToJackpot(driver, wait);
 			//NavigateToReferral(driver, wait);
 			//NavigateToMemo(driver, wait);
-			Memo(driver, wait);
-			//NavigateToLobby(driver, wait);
-			//OpenTable(driver, wait);
+			//Memo(driver, wait);
+			NavigateToLobby(driver, wait);
+			OpenTable(driver, wait);
 			//chat(driver,wait);
-			LogOut(driver, wait);
+			//LogOut(driver, wait);
 		}
 		b.close(); 
 
